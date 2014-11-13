@@ -16,6 +16,7 @@ def elastic_load_balancer(dns_name, *args)
     raise "EC2 Load Balancer not found for #{name} in region #{aws_region}" if load_balancer.nil?
 
     load_balancer.instances.each do |instance|
+        next if instance.status.to_s != 'running'
         hostname = if instance.vpc
             instance.private_ip_address
         else
