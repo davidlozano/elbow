@@ -13,7 +13,7 @@ def elastic_load_balancer(dns_name, *args)
              :elb_endpoint => "elasticloadbalancing.#{aws_region}.amazonaws.com")
 
     load_balancer = AWS::ELB.new.load_balancers.find { |elb| elb.dns_name.downcase == dns_name.downcase }
-    raise "EC2 Load Balancer not found for #{name} in region #{aws_region}" if load_balancer.nil?
+    raise "EC2 Load Balancer not found for #{dns_name} in region #{aws_region}" if load_balancer.nil?
 
     load_balancer.instances.each do |instance|
         next if instance.status.to_s != 'running'
